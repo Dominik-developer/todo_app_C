@@ -46,17 +46,17 @@ void removeTask() {
         printf("\n Error: No tasks available to remove. \n");
     }
 
-    int taksNum;
+    int taskNum;
     printf("\n Enter the number of the task to remove: ");
-    scanf("%d", &taksNum);
+    scanf("%d", &taskNum);
 
-    if (taksNum < 1 || taksNum > taskCount) {
+    if (taskNum < 1 || taskNum > taskCount) {
         printf("\n Error: Invalid task number. \n");
         return;
     }
 
     //removing the task
-    for (int i = taksNum - 1; i < taskCount - 1; i++ ) { // it is hard to explain; taskNUM = i
+    for (int i = taskNum - 1; i < taskCount - 1; i++ ) { // it is hard to explain; taskNUM = i
         strcpy(tasks[i], tasks[i+1]); // copying task from i+1 to i and doing so with the next tasks in table till we reach end of table
     }
 
@@ -65,7 +65,30 @@ void removeTask() {
 }
 
 void editTask() {
+    if (taskCount == 0) {
+        printf("\n Error: No tasks available to edit. \n");
+    }
 
+    int taskNum;
+    printf("\n Enter the number of the task to edit: ");
+    scanf("%d", &taskNum);
+
+    if (taskNum < 1 || taskNum > taskCount) {
+        printf("\n Error: Invalid task number. \n");
+        return;
+    }
+
+    printf("Enter the new description for Task %d: ", taskNum);
+    getchar(); 
+
+    fgets(tasks[taskNum - 1], MAX_LENGTH, stdin);
+
+    size_t length = strlen(tasks[taskNum - 1]);
+    if (length > 0 && tasks[taskNum - 1][length - 1] == '\n' ) {
+        tasks[taskNum - 1][length - 1] = '\0';
+    }
+
+    printf("\nTask %d updated successfully!\n", taskNum);
 }
 
 
@@ -83,7 +106,6 @@ int main() {
         printf("2. Add a task \n");
         printf("3. Delete a task \n");
         printf("4. Edit a task \n");
-        //printf("3. Mark a task as completed \n");
         printf("0. Exit \n");
 
         printf("Choose an option: ");
@@ -111,7 +133,7 @@ int main() {
                 editTask();
                 break;
 
-            case 5 : 
+            case 0 : 
                 printf("Exiting the program. Goodbye! \n");
                 break;
 
