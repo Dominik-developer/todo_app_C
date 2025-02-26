@@ -11,7 +11,7 @@ int taskCount = 0; // task counter
 
 void viewTasks() {
     if (taskCount == 0) {
-        printf("\nNo tasks available. \n");
+        printf("\n No tasks available. \n");
         return;
     }
 
@@ -38,17 +38,23 @@ void addTask() {
     }
 
     taskCount++; // adding 1 to taksCount
-    printf("\nTask added successfully!\n");
+    printf("\n Task added successfully! \n");
 }
 
 void removeTask() {
     if (taskCount == 0) {
         printf("\n Error: No tasks available to remove. \n");
+        return;
     }
 
     int taskNum;
     printf("\n Enter the number of the task to remove: ");
-    scanf("%d", &taskNum);
+
+    if (scanf("%d", &taskNum) != 1 ) {
+        printf("\n Invalid input. Please enter a number. \n");
+        while (getchar() != '\n');
+        return;
+    }
 
     if (taskNum < 1 || taskNum > taskCount) {
         printf("\n Error: Invalid task number. \n");
@@ -60,25 +66,34 @@ void removeTask() {
         strcpy(tasks[i], tasks[i+1]); // copying task from i+1 to i and doing so with the next tasks in table till we reach end of table
     }
 
-    taskCount--; // remoing last task which is the same as the one before him;  taskCount - 1
+    if (taskCount > 0) {
+        taskCount--;
+    } // remoing last task which is the same as the one before him;  taskCount - 1
+
     printf("\n Task removed successfully! \n");
 }
 
 void editTask() {
     if (taskCount == 0) {
         printf("\n Error: No tasks available to edit. \n");
+        return;
     }
 
     int taskNum;
-    printf("\n Enter the number of the task to edit: ");
-    scanf("%d", &taskNum);
+    printf("\n Enter the number of the task to edit:");
+    
+    if (scanf("%d", &taskNum) != 1) {  
+        printf("\n Invalid input. Please enter a number.\n");
+        while (getchar() != '\n');
+        return;  
+    }
 
     if (taskNum < 1 || taskNum > taskCount) {
         printf("\n Error: Invalid task number. \n");
         return;
     }
 
-    printf("Enter the new description for Task %d: ", taskNum);
+    printf("\n Enter the new description for Task %d: ", taskNum);
     getchar(); 
 
     fgets(tasks[taskNum - 1], MAX_LENGTH, stdin);
@@ -88,7 +103,7 @@ void editTask() {
         tasks[taskNum - 1][length - 1] = '\0';
     }
 
-    printf("\nTask %d updated successfully!\n", taskNum);
+    printf("\n Task %d updated successfully! \n", taskNum);
 }
 
 
@@ -109,7 +124,12 @@ int main() {
         printf("0. Exit \n");
 
         printf("Choose an option: ");
-        scanf("%d", &choice);
+
+        if (scanf("%d", &choice) != 1) {  
+            printf("\n Invalid input. Please enter a number.\n");
+            while (getchar() != '\n');
+            return;
+        }
 
         switch (choice) {
 
